@@ -328,7 +328,7 @@ class FinancialsDownloader(object):
         url = (r'http://financials.morningstar.com/ajax/' +
                r'ReportProcess4HtmlAjax.html?&t=' + ticker +
                r'&region=usa&culture=en-US&cur=USD' +
-               r'&reportType=' + report_type + r'&period=12' +
+               r'&reportType=' + report_type + r'&period=3' +
                r'&dataType=A&order=asc&columnYear=5&rounding=3&view=raw')
         with urllib.request.urlopen(url) as response:
             json_text = response.read().decode(u'utf-8')
@@ -365,7 +365,7 @@ class FinancialsDownloader(object):
         self._period_range = pd.period_range(
             year.div.text, periods=len(self._year_ids),
             # freq=pd.datetools.YearEnd(month=period_month))
-            freq = pd.tseries.offsets.YearEnd(month=period_month))
+            freq = 'Q')
         unit = left.find(u'div', {u'id': u'unitsAndFiscalYear'})
         self._fiscal_year_end = int(unit.attrs[u'fyenumber'])
         self._currency = unit.attrs[u'currency']
